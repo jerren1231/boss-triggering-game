@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://bejo2w6rvndx4"]
+
+[ext_resource type="Script" uid="uid://cv6ug2gxwaowg" path="res://ball.gd" id="1_x8fbi"]
+[ext_resource type="Texture2D" uid="uid://qkh7rt4ihltn" path="res://ball up down.png" id="2_41u45"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktgx5"]
+atlas = ExtResource("2_41u45")
+region = Rect2(0, 0, 150, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgol0"]
+atlas = ExtResource("2_41u45")
+region = Rect2(150, 0, 150, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5601"]
+atlas = ExtResource("2_41u45")
+region = Rect2(300, 0, 150, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gchj4"]
+atlas = ExtResource("2_41u45")
+region = Rect2(450, 0, 150, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01kih"]
+atlas = ExtResource("2_41u45")
+region = Rect2(600, 0, 150, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iob0"]
+atlas = ExtResource("2_41u45")
+region = Rect2(750, 0, 150, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jqm0"]
+atlas = ExtResource("2_41u45")
+region = Rect2(900, 0, 150, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_33hcn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktgx5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgol0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n5601")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gchj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01kih")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iob0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jqm0")
+}],
+"loop": 1,
+"name": &"ball up down",
+"speed": 8.0
+}]
+
+[sub_resource type="Animation" id="Animation_41u45"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_nidkk"]
+resource_name = "ball up down"
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vb544"]
+_data = {
+&"RESET": SubResource("Animation_41u45"),
+&"ball up down": SubResource("Animation_nidkk")
+}
+
+[node name="ball" type="Area2D" unique_id=1670010745]
+script = ExtResource("1_x8fbi")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=822287711]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=868679361]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=696856126]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_33hcn")
+animation = &"ball up down"
+autoplay = "ball up down"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1787344334]
+libraries/ = SubResource("AnimationLibrary_vb544")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
